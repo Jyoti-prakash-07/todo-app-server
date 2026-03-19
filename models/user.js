@@ -1,11 +1,20 @@
-import { Sequelize, DataTypes } from 'sequelize';
+const { DataTypes } = require('sequelize');
+const sequelize = require('./db');
 
-const sequelize = new Sequelize('sqlite::memory:');
-
-export const User = sequelize.define('user', {
-    id: DataTypes.NUMBER,
+const User = sequelize.define('user', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
-    dob: DataTypes.DATE,
-    mob_no: DataTypes.NUMBER,
+    email: DataTypes.STRING,
+    mob_no: DataTypes.BIGINT,
+    password: DataTypes.STRING
+}, {
+    tableName: 'users',
+    timestamps: true
 });
+
+module.exports = User;
