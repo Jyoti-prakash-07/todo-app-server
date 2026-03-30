@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./db');
+// const UserTask = require('./user_task');
 
 const User = sequelize.define('user', {
     id: {
@@ -7,14 +8,26 @@ const User = sequelize.define('user', {
         primaryKey: true,
         autoIncrement: true
     },
+    external_id: {
+        type: DataTypes.STRING,
+        unique: true
+    },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
     mob_no: DataTypes.BIGINT,
-    password: DataTypes.STRING
+    status: DataTypes.STRING,
+    password: DataTypes.STRING,
+    createdAt: DataTypes.TIME,
+    updatedAt: DataTypes.TIME,
 }, {
-    tableName: 'users',
+    tableName: 'user',
     timestamps: true
 });
+
+// User.hasMany(UserTask, {
+//     foreignKey: 'user_id',
+//     as: 'tasks'
+// });
 
 module.exports = User;

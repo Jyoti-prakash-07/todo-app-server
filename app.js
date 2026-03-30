@@ -2,36 +2,25 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-// Middleware
-app.use(express.json());
-
-// Routes
+//Routes
 var indexRouter = require('./route/index');
-var usersRouter = require('./route/users');
-var authRouter = require('./route/auth');
+app.use('/', indexRouter);
 
-app.use('/index', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRouter);
-
-// DATABASE
-const sequelize = require('./models/db');
-const User = require('./models/user');
+//DATABASE
+const { sequelize } = require('./models');
 
 (async () => {
     try {
         await sequelize.authenticate();
         console.log('MySQL connection established successfully.');
-
-        await sequelize.sync(); 
-        console.log("Tables synced");
-
-        // ✅ Server start after DB ready
-        app.listen(port, () => {
-            console.log(`Server listening on port ${port}`);
-        });
-
+        await sequelize.sync({ force: true });
+        var tables = require('./models')
     } catch (error) {
         console.error('Unable to connect to database:', error);
     }
 })();
+
+
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
