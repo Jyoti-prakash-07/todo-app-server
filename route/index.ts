@@ -1,21 +1,10 @@
-var express = require('express');
-var router = express.Router();
+import { authRouter } from "./auth";
+import { taskRouter } from "./task";
+import { userRouter } from "./users";
+import { Router } from "express";
 
+export let router = Router();
 
-var usersRouter = require('./users');
-var authRouter = require('./auth');
-
-
-
-router.use('/users', usersRouter);
+router.use('/users', userRouter);
 router.use('/auth', authRouter);
-
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.send('index route');
-});
-/* GET home page. */
-router.get('/hello', function(req, res) {
-  res.send('hello from index route');
-});
-module.exports = router;
+router.use('/task', taskRouter)

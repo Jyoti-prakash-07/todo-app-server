@@ -14,8 +14,16 @@ export const Task = sequelize.define('task', {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     status: DataTypes.STRING,
-    createdAt: DataTypes.TIME,
-    updatedAt: DataTypes.TIME,
+    dueDate: DataTypes.DATE,
+    notes: DataTypes.STRING,
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
     createdBy: DataTypes.INTEGER,
     updatedBy: DataTypes.INTEGER,
 }, {
